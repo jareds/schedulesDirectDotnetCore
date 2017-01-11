@@ -251,6 +251,7 @@ namespace schedulesDirect
                     programInfo.AddRange((ProgramInfo[])Newtonsoft.Json.JsonConvert.DeserializeObject(programDataString, typeof(ProgramInfo[])));
                 }
                 // Go through and add each genre associated with each added program
+                List<Genre> genreList = new List<Genre>();
                 for (int i = 0; i < programInfo.Count(); i++)
                 {
                     if (programInfo[i].genres != null)
@@ -258,13 +259,12 @@ namespace schedulesDirect
                         programInfo[i].programGenres = new List<ProgramGenre>();
                         foreach (string s in programInfo[i].genres)
                         {
-                            var foundGenre = from g in db.genre where g.genre == s select g;
+                            var foundGenre = from g in genreList where g.genre == s select g;
                             Genre currentGenre;
                             if (foundGenre.Count() == 0)
                             {
                                 currentGenre = new Genre { genre = s };
-                                db.genre.Add(currentGenre);
-                                db.SaveChanges(); //Have to save changes for the next time we query
+                                genreList.Add(currentGenre);
                             }
                             else
                             {
