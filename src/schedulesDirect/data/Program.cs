@@ -25,5 +25,6 @@ namespace schedulesDirect.data
         [NotMapped]
         public string[] videoProperties { get; set; }
         public bool premiere { get; set; }
+        public bool dvs { get; set; }
     }
 }

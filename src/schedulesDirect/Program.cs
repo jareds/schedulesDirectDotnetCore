@@ -220,6 +220,16 @@ namespace schedulesDirect
             {
                 dynamic scheduleResponse = JArray.Parse(client.PostAsync("schedules", new StringContent(getStationIDs())).Result.Content.ReadAsStringAsync().Result);
                 Schedule[] schedules = (Schedule[])scheduleResponse.ToObject(typeof(Schedule[]));
+                foreach (Schedule s in schedules)
+                {
+                    foreach (Program p in s.programs)
+                    {
+                        if (p.audioProperties != null && p.audioProperties.Contains<String>("dvs"))
+                        {
+                            p.dvs = true;
+                        }
+                    }
+                }
                 db.AddRange(schedules);
                 db.SaveChanges();
             }
