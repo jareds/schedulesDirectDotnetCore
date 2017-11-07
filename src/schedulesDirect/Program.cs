@@ -68,6 +68,7 @@ namespace schedulesDirect
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("Accept-Encoding", "deflate");
             client.DefaultRequestHeaders.Add("User-Agent", "dotnet grabber");
             client.BaseAddress = new Uri("https://json.schedulesdirect.org/20141201/");
             //Allow use of a specific token for case when debugging by making direct rest calls and comparing to program results
