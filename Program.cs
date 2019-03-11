@@ -29,12 +29,12 @@ namespace schedulesDirect
             {
                 u = getUserInfo();
             }
-            catch (FileNotFoundException f)
+            catch (FileNotFoundException)
             {
                 Console.WriteLine("Configuration file not found, please add config.ini to the directory containing program executable");
                 return;
             }
-            catch (FieldAccessException f)
+            catch (FieldAccessException)
             {
                 return;
             }
@@ -223,6 +223,10 @@ namespace schedulesDirect
                 Schedule[] schedules = (Schedule[])scheduleResponse.ToObject(typeof(Schedule[]));
                 foreach (Schedule s in schedules)
                 {
+                    if (s.programs == null) // once in a while we get schedule with no programs
+                        {
+                        break;
+                    }
                     foreach (Program p in s.programs)
                     {
                         if (p.audioProperties != null && p.audioProperties.Contains<String>("dvs"))
